@@ -2,10 +2,12 @@
 
 $model = <<<EOS
 var model = {
-  name:    "James Bond",
-  contact: {
-    email: "bond@mi6.gov.uk"
-  }
+  name:   "James Bond",
+  actors: [
+    { name: "Sean Connery" },
+    { name: "Pierce Brosnan" },
+    { name: "Daniel Craig", latest: true }
+  ]
 };
 
 $(function () {
@@ -15,11 +17,11 @@ EOS;
 
 $view = <<<EOS
 <p>
-  You may reach <span data-bind="text: name"></span> at
+  <span data-bind="text: name"></span> has been played by:
 </p>
-<ul data-bind="if: contact">
-  <li data-bind="if: contact.email">
-    <a data-bind="text: contact.email, attr: { href: 'mailto:' + contact.email }"></a>
+<ul data-bind="foreach: actors">
+  <li>
+    <span data-bind="text: name"></span><span data-bind="ifnot: latest">, and</span>
   </li>
 </ul>
 EOS;
