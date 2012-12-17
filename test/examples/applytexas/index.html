@@ -32,6 +32,7 @@
             <button class="promote" data-bind="click: @ $parent.promote($this) @"></button>
             <button class="demote" data-bind="click: @ $parent.demote($this) @"></button>
             <button class="addAfter" data-bind="click: @ $parent.addAfter($this) @"></button>
+            <button class="remove" data-bind="click: @ $parent.remove($this) @"></button>
           </th>
         </tr>
 
@@ -42,7 +43,7 @@
                 Organization / Activity</label>
               <input type="text" maxlength=40 data-bind=
                 "attr: { id: `'org' + num()`, title: `'Activity ' + num() + ' organization or activity name.'` },
-                textbox: name"/>
+                btb: name"/>
             </div>
 
             <div class="ctrlHolder blocklabel">
@@ -50,7 +51,7 @@
                 Description</label>
               <input type="text" maxlength=70 data-bind=
                 "attr: { id: `'desc' + num()`, title: `'Activity ' + num() + ' description.'` },
-                textbox: description"/>
+                btb: description"/>
             </div>
           </td>
 
@@ -94,7 +95,7 @@
                     <label class="hide" data-bind="attr: { for: `'pos' + id()` }">Position(s) Held</label>
                     <input type="text" maxlength=40 data-bind=
                       "attr: { id: `'pos' + id()`, title: `'Activity ' + num() + ' positions held.'` },
-                      textbox: position"/>
+                      btb: position"/>
                   </td>
                   <td>
                     <label class="hide" data-bind=
@@ -116,13 +117,13 @@
                     <label class="hide" data-bind=
                       "attr: { for: `'hours' + id()` }, text: 'Hours per week'"></label>
                     <input type="text" maxlength=2 data-bind=
-                      "attr: { id: `'hours' + id()` }, textbox: hours"/>
+                      "attr: { id: `'hours' + id()` }, number: hours"/>
                   </td>
                   <td>
                     <label class="hide" data-bind=
                       "attr: { for: `'weeks' + id()` }, text: 'Weeks per year'"></label>
                     <input type="text" maxlength=2 data-bind=
-                      "attr: { id: `'weeks' + id()` }, textbox: weeks"/>
+                      "attr: { id: `'weeks' + id()` }, number: weeks"/>
                   </td>
                 </tr>
               </tbody>

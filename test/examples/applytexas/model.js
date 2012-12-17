@@ -57,3 +57,8 @@ Model.prototype.addAfter = function addAfter(act) {
   this.activities.splice(act.index() + 1, 0, new Activity(this.activities));
 }
 
+Model.prototype.remove = function remove(act) {
+  if (this.activities().length == 1) return;
+  this.activities.remove(act);
+}
+
