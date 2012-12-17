@@ -3,8 +3,6 @@
   /*global hd*/
   'use strict';
 
-  /* Knockout appears to violate this rule in the same way I would like. I
-   * think it is more readable with inline var declarations. */
   var items = JSON.parse( localStorage.getItem('todos-hotdrink') ),
     Item,
     Model,
@@ -89,8 +87,6 @@
   model = new Model( items );
 
   hd.computed(function() {
-    /* Like Knockout, editing state is persisted, but we ignore it when
-     * loading. */
     localStorage.setItem( 'todos-hotdrink', hd.toJSON( model.items ) );
   });
 
