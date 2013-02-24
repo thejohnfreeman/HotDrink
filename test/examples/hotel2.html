@@ -8,35 +8,6 @@
   <script type="text/javascript" src="../js/hotdrink.js"></script>
   <script type="text/javascript" src="utility.js"></script>
   <script type="text/javascript">
-    dateToMaybeString = function dateToMaybeString(date) {
-      var str = dateToString(date);
-      return str ?
-        { value: str } :
-        { error: "expected date" };
-    };
-
-    ageopts = [
-      { name: "<1", value: 0 },
-      { name: "1", value: 1 },
-      { name: "2", value: 2 },
-      { name: "3", value: 3 },
-      { name: "4", value: 4 },
-      { name: "5", value: 5 },
-      { name: "6", value: 6 },
-      { name: "7", value: 7 },
-      { name: "8", value: 8 },
-      { name: "9", value: 9 },
-      { name: "10", value: 10 },
-      { name: "11", value: 11 },
-      { name: "12", value: 12 },
-      { name: "13", value: 13 },
-      { name: "14", value: 14 },
-      { name: "15", value: 15 },
-      { name: "16", value: 16 },
-      { name: "17", value: 17 },
-      { name: ">17", value: 18 }
-    ];
-
     var HotelModel = hd.model(function () {
       this.checkin  = hd.variable(new Date("25 March 2013"));
       this.checkout = hd.variable(new Date("28 March 2013"));
@@ -75,6 +46,35 @@
     HotelModel.behaviors(hd.enablement);
 
     var model = new HotelModel();
+
+    dateToMaybeString = function dateToMaybeString(date) {
+      var str = dateToString(date);
+      return str ?
+        { value: str } :
+        { error: "expected date" };
+    };
+
+    ageopts = [
+      { name: "<1", value: 0 },
+      { name: "1", value: 1 },
+      { name: "2", value: 2 },
+      { name: "3", value: 3 },
+      { name: "4", value: 4 },
+      { name: "5", value: 5 },
+      { name: "6", value: 6 },
+      { name: "7", value: 7 },
+      { name: "8", value: 8 },
+      { name: "9", value: 9 },
+      { name: "10", value: 10 },
+      { name: "11", value: 11 },
+      { name: "12", value: 12 },
+      { name: "13", value: 13 },
+      { name: "14", value: 14 },
+      { name: "15", value: 15 },
+      { name: "16", value: 16 },
+      { name: "17", value: 17 },
+      { name: ">17", value: 18 }
+    ];
 
     $(function () {
       hd.bind(model);
