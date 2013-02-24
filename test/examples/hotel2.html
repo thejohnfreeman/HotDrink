@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HotDrink | A Demonstration</title>
+  <link rel="stylesheet" type="text/css" href="main.css"/>
+  <script type="text/javascript" src="https://raw.github.com/kriskowal/es5-shim/master/es5-shim.min.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="../js/hotdrink.js"></script>
+  <script type="text/javascript" src="utility.js"></script>
+  <script type="text/javascript">
+    dateToMaybeString = function dateToMaybeString(date) {
+      var str = dateToString(date);
+      return str ?
+        { value: str } :
+        { error: "expected date" };
+    };
+
+    ageopts = [
+      { name: "<1", value: 0 },
+      { name: "1", value: 1 },
+      { name: "2", value: 2 },
+      { name: "3", value: 3 },
+      { name: "4", value: 4 },
+      { name: "5", value: 5 },
+      { name: "6", value: 6 },
+      { name: "7", value: 7 },
+      { name: "8", value: 8 },
+      { name: "9", value: 9 },
+      { name: "10", value: 10 },
+      { name: "11", value: 11 },
+      { name: "12", value: 12 },
+      { name: "13", value: 13 },
+      { name: "14", value: 14 },
+      { name: "15", value: 15 },
+      { name: "16", value: 16 },
+      { name: "17", value: 17 },
+      { name: ">17", value: 18 }
+    ];
+
+    var HotelModel = hd.model(function () {
+      this.checkin  = hd.variable(new Date("25 March 2013"));
+      this.checkout = hd.variable(new Date("28 March 2013"));
+      this.nights   = hd.variable();
+
+      hd.constraint()
+        .method(this.nights, function () {
+          return (this.checkout() - this.checkin()) / MS_IN_DAY;
+        })
+        .method(this.checkin, function () {
+          return new Date(this.checkout().getTime() - (this.nights() * MS_IN_DAY));
+        })
+        .method(this.checkout, function () {
+          return new Date(this.checkin().getTime() + (this.nights() * MS_IN_DAY));
+        });
+          
+
+      this.nkids = hd.variable(0);
+      this.ages  = [
+        hd.variable(0),
+        hd.variable(0),
+        hd.variable(0)
+      ];
+
+      this.book = hd.command(function book() {
+        return hd.fn(alert)(this.checkin(), this.checkout(),
+          hd.toJS(this.ages.slice(0, this.nkids())));
+      });
+
+      hd.precondition(this.book, function () {
+        return this.nights() > 0;
+      });
+
+    });
+
+    HotelModel.behaviors(hd.enablement);
+
+    var model = new HotelModel();
+
+    $(function () {
+      hd.bind(model);
+    });
+  </script>
+</head>
+<body>
+  <form>
+    <label for="checkin">  Check in  </label>
+    <input id="checkin"  type="text"
+    data-bind="date: { value: checkin, toView: dateToMaybeString }"/>
+    <input type="checkbox" data-bind="pin: checkin"/>
+    <br/>
+    <label for="checkout"> Check out </label>
+    <input id="checkout" type="text"
+    data-bind="date: { value: checkout, toView: dateToMaybeString }"/>
+    <input type="checkbox" data-bind="pin: checkout"/>
+    <br/>
+    <label for="nights">   Nights    </label>
+    <input id="nights"   type="text" data-bind="number: nights"/>
+    <input type="checkbox" data-bind="pin: nights"/>
+    <br/>
+    <label for="nkids">   Number of children    </label>
+    <select id="nkids"
+      data-bind="style: { marginRight: '10.5em' }, selectOne: nkids,
+      foreach: [0, 1, 2, 3]">
+      <option data-bind="attr: { label: $this, value: $this }"></option>
+    </select>
+    <input type="checkbox" style="visibility: hidden"/>
+    <br/>
+    <div data-bind="foreach: [0, 1, 2]">
+      <div data-bind="ifenabled: $parent.ages[$this]">
+        <label data-bind="attr: { for: 'age' + $this }">
+          Age of <span data-bind="text: ['first', 'second', 'third'][$this]"></span> child
+        </label>
+        <select
+          data-bind="style: { marginRight: '11em' },
+          attr: { id: 'age' + $this },
+          selectOne: $parent.ages[$this],
+          foreach: ageopts">
+          <option data-bind="attr: { label: name, value: value }"></option>
+        </select>
+      </div>
+    </div>
+    <button type="button" data-bind="command: book">Book</button>
+  </form>
+</body>
+</html>
+
