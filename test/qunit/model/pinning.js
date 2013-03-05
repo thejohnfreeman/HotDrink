@@ -37,7 +37,7 @@
   test("pinning should permit user edit", function () {
     expect(3);
 
-    this.model.a.pin()
+    this.model.a.pin(true);
     this.model.a(2);
     hd.update();
 
@@ -50,9 +50,9 @@
   });
 
   test("pinning should redirect flow", function () {
-    expect(3);
+    expect(9);
 
-    this.model.sum.pin()
+    this.model.sum.pin(true);
     this.model.b(3);
     hd.update();
 
@@ -71,6 +71,16 @@
     strictEqual(this.model.a(), 2,
       "edited variable (a) unchanged");
     strictEqual(this.model.b(), 1,
+      "third variable (b) computed");
+
+    this.model.sum(5);
+    hd.update();
+
+    strictEqual(this.model.sum(), 5,
+      "pinned variable (sum) unchanged");
+    strictEqual(this.model.a(), 2,
+      "more-recently-edited variable (a) unchanged");
+    strictEqual(this.model.b(), 3,
       "third variable (b) computed");
   });
 
